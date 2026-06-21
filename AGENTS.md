@@ -288,7 +288,17 @@ When recommended_action == "CLEAR":
 
 ---
 
-## Security Model
+## Security
+
+### Static Analysis (Semgrep)
+This project uses Semgrep as a pre-commit hook to automatically scan for security vulnerabilities before every commit. The custom `.semgrep.yml` rules check for:
+- Hardcoded API keys or secrets
+- Un-sanitized raw user input passed directly into LLM prompts
+- Missing authentication and role checks in MCP tool calls
+
+To ensure code quality and security, these scans are enforced locally during the `git commit` process via `.pre-commit-config.yaml`.
+
+### Security Model
 
 **File:** `app/security.py`
 

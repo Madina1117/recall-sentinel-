@@ -1,0 +1,34 @@
+rules:
+  - id: hardcoded-api-key
+    patterns:
+      - pattern-either:
+          - pattern: api_key = "..."
+          - pattern: GOOGLE_API_KEY = "..."
+          - pattern: secret = "..."
+    message: "Hardcoded API key detected. Use environment variables instead."
+    severity: ERROR
+    languages: [python]
+
+  - id: raw-user-input-in-prompt
+    patterns:
+      - pattern: $MODEL.generate_content(f"...{$INPUT}...")
+    message: "Potential un-sanitized user input passed directly to LLM."
+    severity: WARNING
+    languages: [python]
+
+  - id: mcp-missing-auth-check
+    patterns:
+      - pattern-inside: |
+          @mcp.tool(...)
+          def $FUNC(...):
+              ...
+      - pattern-not-inside: |
+          @mcp.tool(...)
+          def $FUNC(...):
+              ...
+              check_role(...)
+              ...
+      - pattern: return $ANY
+    message: "MCP tool is missing an authentication or role check before execution."
+    severity: ERROR
+    languages: [python]
