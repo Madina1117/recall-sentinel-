@@ -6,7 +6,7 @@ from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 import importlib.util
 import sys
-from app.security import check_permission
+from app.security import check_permission, redact_pii
 
 def load_local_mcp_module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -45,7 +45,9 @@ class MitigationResult(BaseModel):
 async def prepare_mitigation(callback_context: CallbackContext) -> None:
     """Callback to inject the risk assessment into the state."""
     ra = callback_context.state.get("risk_assessment", {})
-    callback_context.state["risk_assessment"] = json.dumps(ra, indent=2)
+    ra_str = json.dumps(ra, indent=2)
+    # PII redaction — GDPR/CCPA compliance layer
+    callback_context.state["risk_assessment"] = redact_pii(ra_str)
 
 mitigation_agent = Agent(
     name="mitigation_agent",

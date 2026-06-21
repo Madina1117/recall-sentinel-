@@ -1,5 +1,6 @@
 import os
 from pydantic import BaseModel, Field
+from app.events import event_bus, EVENT_RISK_ASSESSED
 from typing import Literal
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
@@ -56,6 +57,15 @@ async def compute_risk_score(callback_context: CallbackContext) -> None:
         "fault_code": t_result.get("fault_code", "UNKNOWN")
     }
 
+async def after_risk_assessment(callback_context: CallbackContext) -> None:
+    computed = callback_context.state.get("computed_risk", {})
+    score = computed.get("risk_score", 0)
+    recommendation = "CONTAIN" if score >= 70 else "MONITOR" if score >= 40 else "CLEAR"
+    await event_bus.publish(EVENT_RISK_ASSESSED, {
+        "risk_score": score,
+        "recommendation": recommendation
+    })
+
 risk_agent = Agent(
     name="risk_agent",
     model=os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite"),
@@ -77,4 +87,5 @@ Follow these steps exactly:
 You MUST NOT call external tools.""",
     output_schema=RiskAssessment,
     before_agent_callback=compute_risk_score,
+    after_agent_callback=after_risk_assessment,
 )

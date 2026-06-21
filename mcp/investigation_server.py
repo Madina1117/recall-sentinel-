@@ -1,6 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 import os
 import json
+from app.events import event_bus, EVENT_TICKET_CREATED
 from datetime import datetime
 
 investigation_mcp = FastMCP("investigation")
@@ -31,6 +32,7 @@ def create_ticket(fault_code: str, affected_vehicles: int, risk_score: int, batc
         "created_at": datetime.now().isoformat()
     }
     _save_state(state)
+    event_bus.publish_sync(EVENT_TICKET_CREATED, {"ticket_id": ticket_id})
     return f"Ticket {ticket_id} created successfully."
 
 @investigation_mcp.tool()

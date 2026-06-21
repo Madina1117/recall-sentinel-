@@ -1,6 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 import os
 import json
+from app.events import event_bus, EVENT_BATCH_QUARANTINED
 from datetime import datetime
 
 inventory_mcp = FastMCP("inventory")
@@ -27,6 +28,7 @@ def quarantine_batch(batch_id: str, reason: str) -> str:
         "timestamp": datetime.now().isoformat()
     }
     _save_state(state)
+    event_bus.publish_sync(EVENT_BATCH_QUARANTINED, {"batch_id": batch_id})
     return f"Batch {batch_id} successfully QUARANTINED."
 
 @inventory_mcp.tool()

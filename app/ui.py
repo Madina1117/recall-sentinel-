@@ -14,6 +14,8 @@ from agents.service_agent import service_agent
 from agents.recall_agent import recall_agent
 from agents.risk_agent import risk_agent
 from agents.mitigation_agent import mitigation_agent
+from app.security import sanitize_input
+from app.events import event_bus, event_log
 
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
@@ -36,6 +38,10 @@ st.sidebar.markdown("**Pre-loaded Synthetic Data:**")
 st.sidebar.markdown("✅ `telemetry.csv` (10,000+ records)")
 st.sidebar.markdown("✅ `service_notes.csv` (Unstructured text)")
 st.sidebar.markdown("✅ `historical_recalls.json`")
+
+st.sidebar.markdown("---")
+vehicle_id_input = st.sidebar.text_input("Vehicle ID (optional)")
+free_text_input = st.sidebar.text_area("Additional Notes (optional)")
 
 async def run_agent(agent, session_id, initial_state=None, prompt="Analyze the data."):
     app = App(name="app", root_agent=agent)
@@ -84,12 +90,17 @@ async def run_agent(agent, session_id, initial_state=None, prompt="Analyze the d
                 
     return result_json
 
-async def run_analysis():
+async def run_analysis(vehicle_id="", custom_notes=""):
+    bus_task = asyncio.create_task(event_bus.start())
     progress_bar = st.progress(0, text="Initializing Agents...")
     
+    prompt_base = "Analyze the data."
+    if vehicle_id or custom_notes:
+        prompt_base += f" Focus on vehicle {vehicle_id}. Notes: {custom_notes}"
+        
     # --- AGENT 1: Telemetry ---
     progress_bar.progress(10, text="Agent 1: Analyzing Telemetry Data...")
-    res1 = await run_agent(telemetry_agent, "s1")
+    res1 = await run_agent(telemetry_agent, "s1", prompt=prompt_base)
     await asyncio.sleep(8)
     
     st.markdown("### 1. Telemetry Agent")
@@ -186,8 +197,26 @@ async def run_analysis():
             
             st.markdown("#### Executive Brief")
             st.info(brief)
+            
+    await asyncio.sleep(0.5)  # allow events to flush
+    bus_task.cancel()
 
 if st.sidebar.button("Run Analysis", type="primary"):
-    os.environ["CURRENT_ROLE"] = role
-    st.sidebar.success(f"Role initialized as: {role}")
-    asyncio.run(run_analysis())
+    try:
+        # Prompt injection defense — OWASP LLM Top 10 compliance
+        safe_vehicle = sanitize_input(vehicle_id_input) if vehicle_id_input else ""
+        safe_notes = sanitize_input(free_text_input) if free_text_input else ""
+        
+        os.environ["CURRENT_ROLE"] = role
+        st.sidebar.success(f"Role initialized as: {role}")
+        asyncio.run(run_analysis(safe_vehicle, safe_notes))
+    except ValueError:
+        st.error("⚠️ Input blocked: potential prompt injection detected")
+
+st.markdown("---")
+with st.expander("📡 Event Log", expanded=True):
+    if not event_log:
+        st.write("No events yet.")
+    else:
+        for event in event_log[-10:]:
+            st.write(f"**{event['time']}** - `{event['type']}` : {event['payload']}")
