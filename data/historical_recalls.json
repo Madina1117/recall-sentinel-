@@ -1,0 +1,81 @@
+{
+  "_note": "SYNTHETIC DEMO DATA \u2014 fabricated for demonstration purposes only. Not real recall records.",
+  "recalls": [
+    {
+      "recall_id": "RC-2024-BAT-003",
+      "year": 2024,
+      "fault_code": "BAT_COOL_004",
+      "symptom_keywords": [
+        "coolant ingress",
+        "battery terminals",
+        "coolant residue",
+        "connector corrosion"
+      ],
+      "part_family": "BAT-GEN4",
+      "affected_vehicles": 892,
+      "outcome": "RECALLED",
+      "description": "Coolant line routing defect allowed fluid seepage onto high-voltage battery connectors, causing corrosion and intermittent fault codes. Resulted in voluntary recall.",
+      "similarity_threshold": 0.85
+    },
+    {
+      "recall_id": "RC-2023-BAT-001",
+      "year": 2023,
+      "fault_code": "BAT_TEMP_002",
+      "symptom_keywords": [
+        "thermal runaway",
+        "overheating",
+        "battery swelling"
+      ],
+      "part_family": "BAT-GEN3",
+      "affected_vehicles": 214,
+      "outcome": "RECALLED",
+      "description": "Battery thermal management failure under fast-charge conditions.",
+      "similarity_threshold": 0.8
+    },
+    {
+      "recall_id": "RC-2023-CHG-002",
+      "year": 2023,
+      "fault_code": "CHG_002",
+      "symptom_keywords": [
+        "charging interrupted",
+        "port fault",
+        "charge timeout"
+      ],
+      "part_family": "CHG-GEN2",
+      "affected_vehicles": 130,
+      "outcome": "SERVICE_BULLETIN",
+      "description": "Charge port controller firmware defect causing intermittent charge failures.",
+      "similarity_threshold": 0.75
+    },
+    {
+      "recall_id": "RC-2024-SENS-001",
+      "year": 2024,
+      "fault_code": "SENS_001",
+      "symptom_keywords": [
+        "sensor dropout",
+        "range display error",
+        "SOC mismatch"
+      ],
+      "part_family": "BAT-GEN4",
+      "affected_vehicles": 67,
+      "outcome": "OTA_FIX",
+      "description": "State-of-charge sensor reporting error corrected via OTA update.",
+      "similarity_threshold": 0.7
+    },
+    {
+      "recall_id": "RC-2022-BRAKE-001",
+      "year": 2022,
+      "fault_code": "BRAKE_003",
+      "symptom_keywords": [
+        "brake judder",
+        "ABS fault",
+        "regenerative braking loss"
+      ],
+      "part_family": "BRAKE-GEN2",
+      "affected_vehicles": 445,
+      "outcome": "RECALLED",
+      "description": "ABS module software conflict with regenerative braking system.",
+      "similarity_threshold": 0.8
+    }
+  ]
+}

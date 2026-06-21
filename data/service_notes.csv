@@ -1,0 +1,63 @@
+vehicle_id,date,technician_note
+VIN_B1042_082,2026-05-04,Found coolant residue near battery connector terminals. Customer reports occasional warning light.
+VIN_B1042_042,2026-05-06,Brake pad inspection — front pads at 40%. No battery concerns.
+VIN_B1043_021,2026-06-08,Brake pad inspection — front pads at 40%. No battery concerns.
+VIN_B1042_119,2026-04-22,Charging port cleaning completed. No faults present.
+VIN_B1042_080,2026-05-22,Battery connector housing shows white crystalline residue consistent with coolant ingress.
+VIN_B1042_076,2026-05-20,Coolant residue near high-voltage battery connectors. Flagging for further inspection.
+VIN_B1042_021,2026-06-05,Found coolant residue near battery connector terminals. Customer reports occasional warning light.
+VIN_B1042_022,2026-05-01,Visible coolant staining on battery module bracket. Connector area cleaned.
+VIN_B1042_011,2026-06-18,"Battery connector terminals corroded, coolant residue identified as likely cause."
+VIN_B1042_092,2026-06-07,Customer complaint: warning light intermittent. Found coolant deposits at battery connector.
+VIN_B1042_002,2026-06-01,Customer complaint: warning light intermittent. Found coolant deposits at battery connector.
+VIN_B1042_008,2026-06-11,Found coolant residue near battery connector terminals. Customer reports occasional warning light.
+VIN_B1042_045,2026-04-08,Software update completed. No hardware issues found.
+VIN_B1042_064,2026-05-14,Customer complaint: warning light intermittent. Found coolant deposits at battery connector.
+VIN_B1042_068,2026-06-04,Found coolant residue near battery connector terminals. Customer reports occasional warning light.
+VIN_B1040_036,2026-04-05,Minor battery temperature fluctuation observed during charging cycle. Within spec.
+VIN_B1042_108,2026-06-10,Visible coolant staining on battery module bracket. Connector area cleaned.
+VIN_B1042_102,2026-06-08,Coolant residue near high-voltage battery connectors. Flagging for further inspection.
+VIN_B1042_059,2026-05-13,Battery connector housing shows white crystalline residue consistent with coolant ingress.
+VIN_B1043_005,2026-06-18,Tire rotation completed. Customer reported no warning lights.
+VIN_B1042_075,2026-05-07,Tire rotation completed. Customer reported no warning lights.
+VIN_B1042_073,2026-05-29,Battery connector housing shows white crystalline residue consistent with coolant ingress.
+VIN_B1042_012,2026-05-25,Coolant seepage visible around battery junction box. Cleaned and monitored.
+VIN_B1042_087,2026-05-20,"Battery connector terminals corroded, coolant residue identified as likely cause."
+VIN_B1042_112,2026-05-23,Found coolant residue near battery connector terminals. Customer reports occasional warning light.
+VIN_B1042_039,2026-06-16,Customer complaint: warning light intermittent. Found coolant deposits at battery connector.
+VIN_B1040_004,2026-04-26,Customer reports range anxiety. Battery health within normal parameters.
+VIN_B1042_049,2026-06-04,Coolant seepage visible around battery junction box. Cleaned and monitored.
+VIN_B1042_015,2026-05-30,Technician noted moisture at battery terminal block — possible coolant leak from adjacent line.
+VIN_B1042_053,2026-05-29,Coolant seepage visible around battery junction box. Cleaned and monitored.
+VIN_B1042_019,2026-05-04,Coolant leak from thermal management line dripping onto battery connector housing.
+VIN_B1043_023,2026-05-30,Routine 12-month service completed. All systems nominal.
+VIN_B1042_106,2026-05-09,Technician noted moisture at battery terminal block — possible coolant leak from adjacent line.
+VIN_B1042_030,2026-05-30,"Battery connector terminals corroded, coolant residue identified as likely cause."
+VIN_B1042_088,2026-05-03,Technician noted moisture at battery terminal block — possible coolant leak from adjacent line.
+VIN_B1040_024,2026-06-16,Charging port cleaning completed. No faults present.
+VIN_B1042_084,2026-06-14,Battery connector housing shows white crystalline residue consistent with coolant ingress.
+VIN_B1042_023,2026-05-05,Coolant leak from thermal management line dripping onto battery connector housing.
+VIN_B1042_045,2026-05-16,Technician noted moisture at battery terminal block — possible coolant leak from adjacent line.
+VIN_B1042_070,2026-05-13,Small coolant leak detected near battery tray. Residue present on connector.
+VIN_B1042_092,2026-05-10,Customer reports range anxiety. Battery health within normal parameters.
+VIN_B1042_091,2026-04-07,HVAC inspection — no issues found. Battery temp normal.
+VIN_B1042_010,2026-06-18,Coolant seepage visible around battery junction box. Cleaned and monitored.
+VIN_B1042_107,2026-05-29,Visible coolant staining on battery module bracket. Connector area cleaned.
+VIN_B1042_063,2026-06-07,Small coolant leak detected near battery tray. Residue present on connector.
+VIN_B1042_037,2026-05-18,Coolant leak from thermal management line dripping onto battery connector housing.
+VIN_B1042_075,2026-05-10,Visible coolant staining on battery module bracket. Connector area cleaned.
+VIN_B1040_028,2026-06-05,Routine 12-month service completed. All systems nominal.
+VIN_B1042_133,2026-05-25,Coolant residue near high-voltage battery connectors. Flagging for further inspection.
+VIN_B1042_117,2026-05-03,Customer reports range anxiety. Battery health within normal parameters.
+VIN_B1042_057,2026-05-27,Battery connector housing shows white crystalline residue consistent with coolant ingress.
+VIN_B1042_124,2026-05-19,Technician noted moisture at battery terminal block — possible coolant leak from adjacent line.
+VIN_B1042_060,2026-06-12,Small coolant leak detected near battery tray. Residue present on connector.
+VIN_B1042_031,2026-05-25,Coolant residue near high-voltage battery connectors. Flagging for further inspection.
+VIN_B1042_038,2026-05-24,"Battery connector terminals corroded, coolant residue identified as likely cause."
+VIN_B1042_086,2026-05-29,Coolant residue near high-voltage battery connectors. Flagging for further inspection.
+VIN_B1042_046,2026-04-03,Tire rotation completed. Customer reported no warning lights.
+VIN_B1042_024,2026-05-27,Customer complaint: warning light intermittent. Found coolant deposits at battery connector.
+VIN_B1042_096,2026-06-16,Visible coolant staining on battery module bracket. Connector area cleaned.
+VIN_B1042_111,2026-05-11,Coolant leak from thermal management line dripping onto battery connector housing.
+VIN_B1042_033,2026-06-05,Coolant seepage visible around battery junction box. Cleaned and monitored.
+VIN_B1042_079,2026-05-28,Small coolant leak detected near battery tray. Residue present on connector.
