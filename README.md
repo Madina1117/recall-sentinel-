@@ -101,11 +101,8 @@ cp .env.example .env
 ### Run locally
 
 ```bash
-# Run the full agent pipeline
-python agents/mitigation_agent.py
-
-# Run the Streamlit UI
-streamlit run app/ui.py
+# Run the Streamlit UI (recommended — includes all dependencies)
+uv run --with "google-adk[a2a]>=0.5.0" --with "google-genai" --with "python-dotenv" --with "pandas" --with "fastmcp" --with "streamlit" streamlit run app/ui.py
 ```
 
 ---
