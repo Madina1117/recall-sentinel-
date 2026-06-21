@@ -60,20 +60,24 @@ quarantine_      create_ticket()
 batch()
 ```
 
-**Key concepts demonstrated:** Multi-agent (ADK), MCP Servers, Agent Skills, Security/RBAC, Deployability, Antigravity IDE
+**Key concepts demonstrated:** Multi-agent (ADK), MCP Servers, Agent Skills, RBAC + PII Redaction + Prompt Injection Defense, STRIDE Threat Model, Pub/Sub Events, Semgrep Pre-commit, Antigravity IDE
 
 ---
 
-## Kaggle Rubric Concepts Covered
+## Course Takeaways Covered
 
-| Concept | Where | How |
-|---------|-------|-----|
-| Agent / Multi-agent (ADK) | `agents/` | 5-agent graph with parallel + sequential execution |
-| MCP Server | `mcp/` | 2 custom MCP servers with 6 tools |
-| Agent Skills | `skills/` | 3 SKILL.md files |
-| Security Features | `app/security.py` | Role-based access control (Engineer / Manufacturing / Executive) |
-| Deployability | `app/` | Streamlit + FastAPI, documented for Cloud Run |
-| Antigravity IDE | Video | Built and demoed in Antigravity |
+| # | Takeaway | Where | Implementation |
+|---|----------|-------|----------------|
+| 1 | Multi-agent orchestration (ADK) | `agents/` | 5-agent graph, parallel + sequential execution |
+| 2 | MCP server + tools | `mcp/` | 2 FastMCP servers, 6 tools |
+| 3 | Custom Skills | `.agents/skills/` | 3 SKILL.md files with YAML frontmatter |
+| 4 | Gemini 2.5 Flash Lite | `agents/*.py` | Model used across all 5 agents |
+| 5 | ADK 2.0 graph workflow | `agents/*.py` | `before_agent_callback`, Pydantic schemas, `InMemoryRunner` |
+| 6 | Semgrep pre-commit hooks | `.pre-commit-config.yaml`, `.semgrep.yml` | 3 custom rules: API keys, unsanitized LLM input, missing auth |
+| 7 | PII redaction | `app/security.py` → `redact_pii()` | Regex scrub of names, phones, emails before LLM |
+| 8 | Prompt injection defense | `app/security.py` → `sanitize_input()` | Blocklist check + 2000-char limit on all user inputs |
+| 9 | STRIDE threat modeling | `SECURITY.md` | Full STRIDE table mapped to codebase mitigations |
+| 10 | Pub/Sub event handling | `app/events.py` | `asyncio.Queue` event bus; 3 event types; UI event log |
 
 ---
 
@@ -116,7 +120,7 @@ recall-sentinel/
 │   ├── recall_agent.py         # Agent 3 — historical pattern matching
 │   ├── risk_agent.py           # Agent 4 — risk scoring and decision
 │   └── mitigation_agent.py     # Agent 5 — containment actions via MCP
-├── skills/
+├── .agents/skills/
 │   ├── detect_failure_pattern/SKILL.md
 │   ├── assess_recall_risk/SKILL.md
 │   └── contain_defect/SKILL.md
@@ -130,9 +134,13 @@ recall-sentinel/
 │   └── historical_recalls.json # Synthetic historical recall patterns
 ├── app/
 │   ├── api.py                  # FastAPI backend
-│   ├── ui.py                   # Streamlit frontend
-│   └── security.py             # Role-based access control
+│   ├── ui.py                   # Streamlit frontend with event log
+│   ├── security.py             # RBAC, PII redaction, prompt injection defense
+│   └── events.py               # Pub/Sub event bus (asyncio.Queue)
 ├── AGENTS.md                   # Full agent specification
+├── SECURITY.md                 # STRIDE threat model
+├── .pre-commit-config.yaml     # Semgrep pre-commit hook
+├── .semgrep.yml                # Custom security rules
 ├── .env.example                # Environment variable template
 └── README.md
 ```
@@ -142,7 +150,7 @@ recall-sentinel/
 ## Demo Scenarios
 
 **Scenario 1 — Full Containment (High Risk)**
-Upload `telemetry.csv` + `service_notes.csv`. The agents detect BAT_COOL_004 spiking 620% across batch B1042, match it to a known prior recall with 88% similarity, and automatically quarantine the batch, open a ticket, and generate an executive brief.
+Upload `telemetry.csv` + `service_notes.csv`. The agents detect BAT_COOL_004 spiking 19,721% across 146 vehicles in batch B1042, match it to a known prior recall with 88% similarity (risk score: 100/100), and automatically quarantine the batch, open a ticket, and generate an executive brief. The 📡 Event Log shows all three events firing in sequence.
 
 **Scenario 2 — Monitor Only (Low Risk)**
 Modify inputs to show a minor frequency increase (3 vehicles). The risk score falls below 40. No quarantine is triggered — the system recommends monitoring only.
