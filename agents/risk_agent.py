@@ -16,9 +16,9 @@ class RiskAssessment(BaseModel):
 
 async def compute_risk_score(callback_context: CallbackContext) -> None:
     """Callback to deterministically compute the risk score based on agent inputs."""
-    t_result = callback_context.state.get("telemetry_result", {})
-    s_result = callback_context.state.get("service_result", {})
-    r_result = callback_context.state.get("recall_result", {})
+    t_result = callback_context.state.get("telemetry_result") or {}
+    s_result = callback_context.state.get("service_result") or {}
+    r_result = callback_context.state.get("recall_result") or {}
     
     risk_score = 0
     

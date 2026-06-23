@@ -22,11 +22,9 @@ class RecallEventBus:
         await self.queue.put((event_type, payload))
         
     def publish_sync(self, event_type, payload):
-        try:
-            loop = asyncio.get_running_loop()
-            loop.create_task(self.publish(event_type, payload))
-        except RuntimeError:
-            asyncio.run(self.publish(event_type, payload))
+        """Synchronous publish for tool callbacks — writes directly to event_log, bypassing the async queue."""
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        event_log.append({"time": timestamp, "type": event_type, "payload": payload})
 
     def subscribe(self, handler):
         self.subscribers.append(handler)

@@ -46,12 +46,13 @@ free_text_input = st.sidebar.text_area("Additional Notes (optional)")
 async def run_agent(agent, session_id, initial_state=None, prompt="Analyze the data."):
     app = App(name="app", root_agent=agent)
     session_service = InMemorySessionService()
-    await session_service.create_session(app_name="app", user_id="user", session_id=session_id)
-    
-    if initial_state:
-        session = await session_service.get_session(app_name="app", user_id="user", session_id=session_id)
-        session.state.update(initial_state)
-        
+    # Pass state at creation time — the correct ADK pattern
+    await session_service.create_session(
+        app_name="app",
+        user_id="user",
+        session_id=session_id,
+        state=initial_state if initial_state else {}
+    )
     runner = Runner(app=app, session_service=session_service)
     result_json = None
     
@@ -65,11 +66,13 @@ async def run_agent(agent, session_id, initial_state=None, prompt="Analyze the d
             ):
                 if event.content:
                     text = event.content.parts[0].text
+                    if text is None:
+                        continue  # Skip function-call events (no text part)
                     if "```json" in text:
                         text = text.split("```json")[1].split("```")[0].strip()
                     elif "```" in text:
                         text = text.split("```")[1].strip()
-                        
+
                     try:
                         result_json = json.loads(text)
                     except json.JSONDecodeError:
@@ -173,14 +176,15 @@ async def run_analysis(vehicle_id="", custom_notes=""):
 
     # --- AGENT 5: Mitigation ---
     progress_bar.progress(90, text="Agent 5: Executing Containment MCP Tools...")
-    mit_state = {"risk_assessment": res4 or {}}
-    res5 = await run_agent(mitigation_agent, "s5", initial_state=mit_state, prompt="Take mitigation actions.")
+    # Pass risk assessment directly in prompt to avoid ADK state serialization issues
+    mit_prompt = f"Take mitigation actions. Here is the risk assessment: {json.dumps(res4 or {})}"
+    res5 = await run_agent(mitigation_agent, "s5", prompt=mit_prompt)
     
     progress_bar.progress(100, text="Analysis Complete!")
     
     st.markdown("### 5. Mitigation Orchestrator")
     if res5:
-        brief = res5.get("brief", "")
+        brief = res5.get("brief") or ""
         
         # Check for Security Denial
         if "Unauthorized" in brief and "Executive" in brief:
